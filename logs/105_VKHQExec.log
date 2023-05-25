@@ -1,0 +1,45 @@
+App Started in:
+
+2023 / 5 / 11 -- 17:44.28
+YYYY / M / DD -- HH:MM.SS
+
+  ([========App Started:========])
+
+-<[========Engine initialization Start:========]>-
+
+    -<[========Creating Window:========]>-
+
+      SDL2 initialized!
+
+       |=Window Flags:
+       |>RESIZABLE
+       |>VULKAN
+       |============]
+
+    -<[========Created Window!========]>-
+
+    -<[========Creating Instance:========]>-
+
+      Setted AppInfo!
+
+      <========WINDOW EXTs:========>
+       |>VK_KHR_surface
+       |>VK_KHR_xlib_surface
+       |>VK_EXT_debug_utils      
+      <========^Window exts^========>
+
+      -<[========Populating DebugMessenger:========]>-
+
+        Binded DebugCallback!
+
+      -<[========Populated DebugMessenger!========]>-
+
+      ##:VALIDATION_LAYERS:##-loader_validate_layers: Layer 0 does not exist in the list of available layers
+
+      ##:RUNTIME_ERROR:##-Failed to create instance!
+
+[ 1:W , 1:E ]
+
+
+2023 / 5 / 11 -- 17:44.28
+YYYY / M / DD -- HH:MM.SS

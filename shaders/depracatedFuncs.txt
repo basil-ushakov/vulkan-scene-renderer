@@ -1,0 +1,84 @@
+
+#define E 2.71828182846
+#define PI 3.14159265359
+
+float erf(float x){
+    const float a1 =  0.254829592;
+    const float a2 = -0.284496736;
+    const float a3 =  1.421413741;
+    const float a4 = -1.453152027;
+    const float a5 =  1.061405429;
+    const float p  =  0.3275911;
+
+    int sign = 1;
+    if (x < 0)
+        sign = -1;
+    x = abs(x);
+
+    float t = 1.0/(1.0 + p*x);
+    float y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*exp(-x*x);
+
+    return sign*y;
+}
+
+float gauss(float x,float sigma){
+  float p1=erf((x-0.5f)/sigma*sqrt(0.5f));
+  float p2=erf((x+0.5f)/sigma*sqrt(0.5f));
+  return (p2-p1)/2.f;
+}
+
+vec2 step = 1.f/res;
+
+int blurIter = int(sharp);
+vec4 rslt=vec4(0.f);
+
+vec4 gaussBlurH(vec2 coord){
+  int i=0;
+  if(blurIter>1){
+    for(;i<blurIter;i++){
+      if(coord.x!=res.x){
+        rslt+=texture(texSampler,vec2(coord.x+i*step.x,coord.y))*gauss(i,blurIter/4.f);
+        rslt+=texture(texSampler,vec2(coord.x-i*step.x,coord.y))*gauss(i,blurIter/4.f);
+      }else
+      if(coord.x!=0){
+        rslt+=texture(texSampler,vec2(coord.x-i*step.x,coord.y))*gauss(i,blurIter/4.f);
+      }
+    }
+  }else{
+    return vec4(0.f);
+  }
+
+  return rslt;
+}
+
+vec4 gaussBlurV(vec2 coord){
+  int i=0;
+  if(blurIter>1){
+    for(;i<blurIter;i++){
+      if(coord.y!=res.y){
+        rslt+=texture(texSampler,vec2(coord.x,coord.y+i*step.y))*gauss(i,blurIter/4.f);
+        rslt+=texture(texSampler,vec2(coord.x,coord.y-i*step.y))*gauss(i,blurIter/4.f);
+      }else
+      if(coord.y!=0){
+        rslt+=texture(texSampler,vec2(coord.x,coord.y-i*step.y))*gauss(i,blurIter/4.f);
+      }
+    }
+  }else{
+    rslt+=texture(texSampler,vec2(coord))*gauss(i,blurIter/4.f);
+  }
+
+  return rslt;
+}
+
+vec3 tex = texture(texSampler,fragTexCoord).rgb;
+vec3 sharpness(){
+    vec3 texA = texture(texSampler,fragTexCoord + vec2(-step.x, -step.y)).rgb;
+    vec3 texB = texture(texSampler,fragTexCoord + vec2( step.x, -step.y)).rgb;
+    vec3 texC = texture(texSampler,fragTexCoord + vec2(-step.x,  step.y)).rgb;
+    vec3 texD = texture(texSampler,fragTexCoord + vec2( step.x,  step.y)).rgb;
+    return ((texA+texB+texC+texD)*0.25-tex)*sharp;
+}
+
+float rand(vec2 co){
+    return fract(sin(dot(co.xy,vec2(12.9898,78.233))) * 43758.5453);
+}

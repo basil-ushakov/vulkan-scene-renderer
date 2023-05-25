@@ -1,0 +1,767 @@
+App Started in:
+
+2023 / 3 / 19 -- 12:38.06
+YYYY / M / DD -- HH:MM.SS
+
+  ([========App Started:========])
+
+-<[========Engine initialization Start:========]>-
+
+    -<[========Creating Window:========]>-
+
+      SDL2 initialized!
+
+       |=Window Flags:
+       |>RESIZABLE
+       |>VULKAN
+       |============]
+
+    -<[========Created Window!========]>-
+
+    -<[========Creating Instance:========]>-
+
+      Setted AppInfo!
+
+      <========WINDOW EXTs:========>
+       |>VK_KHR_surface
+       |>VK_KHR_xlib_surface
+       |>VK_EXT_debug_utils      
+      <========^Window exts^========>
+
+      -<[========Populating DebugMessenger:========]>-
+
+        Binded DebugCallback!
+
+      -<[========Populated DebugMessenger!========]>-
+
+      Created VulkanContext!
+
+      Validation layers requested and avaible!
+
+    -<[========Created Instance!========]>-
+
+    -<[========Setuping DebugMessenger:========]>-
+
+      VALIDATION LAYER: true
+
+      Created DebugMessenger!
+
+    -<[========Setuped DebugMessenger!========]>-
+
+    -<[========Creating surface:========]>-
+
+      Created SDL2 surface!
+
+    -<[========Created Surface!========]>-
+
+    -<[========Getting Physical Device:========]>-
+
+      Finded VK forged GPU/s!
+
+      Device count is: 2
+
+      |}*****(((>-Checking Device support:-<)))*****{|
+
+        |}--------Finding QFamilies for "Check Device Support"--------{|
+
+          QueueFamilies now is: 2
+
+          Finded Queues Support for [0]
+
+           /---==---]
+           |>GRAPHICS
+           |>PRESENT
+           |>COMPUTE
+           |>TRANSFER
+           \---==---]
+
+          QueueCount now is: 1
+
+          Finded Queues Support for [1]
+
+           /---==---]
+           |>PRESENT
+           |>COMPUTE
+           |>TRANSFER
+           \---==---]
+
+          QueueCount now is: 4
+
+          Inds ready!
+
+        |}--------Getted QFamilies for "Check Device Support"--------{|
+
+        -<[========Checking Device EXTs support:========]>-
+
+          PhysicalDevice is: NOT NULL!
+
+          Temp Required EXTs array erased: true
+
+        -<[========Checked Device EXTs support!========]>-
+
+        -<========Checking SwapChain support:========>-
+
+          SurfaceFormat count is: 2
+
+          SurfaceFormat is: SUPPORTED
+
+          PresentMode count is: 4
+
+          PresentModes is: SUPPORTED
+
+        -<========Checked SwapChain support!========>-
+
+        Inds gFam has value: 1
+
+        Extensions support: true
+
+        SwapChain workable: true
+
+      |}*****(((>-Checked Device support!-<)))*****{|
+
+      FramebufferColorSampleCounts is: 15
+
+      FramebufferDepthSampleCounts is: 15
+
+        Getted PhyscialDeviceDetails!
+
+        Finded suitable GPU/s!
+
+      -<[========Getted Physical Device!========]>-
+
+      -<[========Creating & Configuring Device:========]>-
+
+        QueueFamilyCount is: 2
+
+        EXTs count is: 1
+
+        Created Device!
+
+        Device is: NOT NULL
+
+        Getted graphics family queue: 0
+
+        Getted present family queue: 1
+
+        Getted transfer family queue: 1
+
+      -<[========Created & Configured Device!========]>-
+
+      -<[========Creating SwapChain:========]>-
+
+        -<========Checking SwapChain support:========>-
+
+          SurfaceFormat count is: 2
+
+          SurfaceFormat is: SUPPORTED
+
+          PresentMode count is: 4
+
+          PresentModes is: SUPPORTED
+
+        -<========Checked SwapChain support!========>-
+
+        -<========SWAPCHAIN FORMATS:========>-
+
+          SwapChain format is: B8G8R8A8_UNORM
+
+          SwapChain colorSpace is: SRGB_NONLINEAR
+
+        -<========^SwapChain formats^========>-
+
+        -<========PRESENT MODES:========>-
+           >|IMMEDIATE
+           >|MAILBOX
+           >|FIFO
+           >|FIFO RELAXED          
+
+          Priority: 6
+
+          Count is: 4
+
+          Present mode is: MAILBOX
+
+        -<========^Present modes^========>-
+
+        -<========SWAPCHAIN EXTENT:========>-
+
+          Current extent isn't bigger than maxValue of UINT32 Type!
+
+          Extent width: 900
+
+          Extent height: 900
+
+        -<========^SwapChain extent^========>-
+
+        SwapChain frame count: 4
+
+        gFam value: 0
+
+        pFam value: 1
+
+        Image ShareMode is: CONCURRENT
+
+      -<[========Created SwapChain!========]>-
+
+      -<[========Creating SwapChain ImageViews:========]>-
+
+        Resizing SwapChain ImageViews array with size: 5
+
+          >|Created SwapChain Image view number: '1'
+
+          >|Created SwapChain Image view number: '2'
+
+          >|Created SwapChain Image view number: '3'
+
+          >|Created SwapChain Image view number: '4'
+
+          >|Created SwapChain Image view number: '5'
+
+        SwapChain ImageViews count is: 5
+
+      -<[========Created SwapChain ImageViews!========]>-
+
+      -<[========Creating RenderPass:========]>-
+
+        Attachment count is: 3
+
+      -<[========Created RenderPass!========]>-
+
+      -<[========Creating Descriptors:========]>-
+
+      -<[========Created Descriptors!========]>-
+
+      -<[========Creating GraphicalPipeline:========]>-
+
+        |}--------Reading file: 'shaders/vert.spv'--------{|
+
+          File's opening in ReadMode [BINARY]
+
+          File readed Successfully!
+
+        |}--------Readed file: 'shaders/vert.spv'--------{|
+
+        |}--------Reading file: 'shaders/frag.spv'--------{|
+
+          File's opening in ReadMode [BINARY]
+
+          File readed Successfully!
+
+        |}--------Readed file: 'shaders/frag.spv'--------{|
+
+        |}--------Creating ShaderModule:--------{|
+
+        |}--------Created ShaderModule!--------{|
+
+        |}--------Creating ShaderModule:--------{|
+
+        |}--------Created ShaderModule!--------{|
+
+        Current Resolution: 900:X|900:Y
+
+         |=Blend ColorChannels:
+         |>R=[0]
+         |>G=[0]
+         |>B=[0]
+         |>A=[0]
+         |============]
+
+        ShaderStages count is: 2
+
+      -<[========Created GraphicalPipeline!========]>-
+
+      -<[========Creating ComputePipeline:========]>-
+
+        |}--------Reading file: 'shaders/comp.spv'--------{|
+
+          File's opening in ReadMode [BINARY]
+
+          File readed Successfully!
+
+        |}--------Readed file: 'shaders/comp.spv'--------{|
+
+        |}--------Creating ShaderModule:--------{|
+
+        |}--------Created ShaderModule!--------{|
+
+      -<[========Created ComputePipeline!========]>-
+
+      -<[========Creating CommandPool:========]>-
+
+         |=CommandBuffer Flags:
+         |>RESET COMMANDBUFFER
+         |============]
+
+        QueueFamilyIndex is: 0
+
+      -<[========Created CommandPool!========]>-
+
+      -<[========Creating ColorBuffer:========]>-
+
+        -<[========Creating Image:========]>-
+
+          MipLevel count is: 0
+
+        -<[========Created Image!========]>-
+
+      -<[========Created ColorBuffer!========]>-
+
+      -<[========Creating DepthBuffer:========]>-
+
+        Finding DepthFormat!
+
+        -<[========Creating Image:========]>-
+
+          MipLevel count is: 0
+
+        -<[========Created Image!========]>-
+
+        -<[========Changing ImgLayout:========]>-
+
+          -<[========Starting using of SingleCommandBuffer:========]>-
+
+            Allocating CommandBuffer!
+
+            Recording in SingleCommandBuffer!
+
+            MipLevel count is: 1
+
+            Recorded in SingleCommandBuffer!
+
+            Submiting SingleCommandBuffer into queue!
+
+          -<[========Finished using of SingleCommandBuffer!========]>-
+
+        -<[========Changed ImgLayout!========]>-
+
+      -<[========Created DepthBuffer!========]>-
+
+      -<[========Creating FrameBuffer:========]>-
+
+        Resizing SwapChainFramebuffers array!
+
+        Creating SwapChain FrameBuffers:
+
+          >|Created FrameBuffer number '1'
+
+          >|Created FrameBuffer number '2'
+
+          >|Created FrameBuffer number '3'
+
+          >|Created FrameBuffer number '4'
+
+          >|Created FrameBuffer number '5'
+
+        FrameBuffer count is: '5'
+
+      -<[========Created FrameBuffer!========]>-
+
+      -<[========Creating Texture:========]>-
+
+        MipMaps count is: 12
+
+        |}========Creating Buffer 'Image'========{|
+
+          Size: '16777216'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'Image'========{|
+
+        ImageBufferMemory mapped!
+
+        ImageBufferMemory unmapped!
+
+        -<[========Creating Image:========]>-
+
+          MipLevel count is: 12
+
+        -<[========Created Image!========]>-
+
+        -<[========Changing ImgLayout:========]>-
+
+          -<[========Starting using of SingleCommandBuffer:========]>-
+
+            Allocating CommandBuffer!
+
+            Recording in SingleCommandBuffer!
+
+            MipLevel count is: 12
+
+            Recorded in SingleCommandBuffer!
+
+            Submiting SingleCommandBuffer into queue!
+
+          -<[========Finished using of SingleCommandBuffer!========]>-
+
+        -<[========Changed ImgLayout!========]>-
+
+        -<[========Copying Buffer to Image:========]>-
+
+          -<[========Starting using of SingleCommandBuffer:========]>-
+
+            Allocating CommandBuffer!
+
+            Recording in SingleCommandBuffer!
+
+            Recorded in SingleCommandBuffer!
+
+            Submiting SingleCommandBuffer into queue!
+
+          -<[========Finished using of SingleCommandBuffer!========]>-
+
+        -<[========Copyed Buffer to Image!========]>-
+
+        -<[========Creating MipMaps:========]>-
+
+          MipMaps count is:12
+
+          -<[========Starting using of SingleCommandBuffer:========]>-
+
+            Allocating CommandBuffer!
+
+            Recording in SingleCommandBuffer!
+
+            Recorded in SingleCommandBuffer!
+
+            Submiting SingleCommandBuffer into queue!
+
+          -<[========Finished using of SingleCommandBuffer!========]>-
+
+        -<[========Created MipMaps!========]>-
+
+      -<[========Created Texture!========]>-
+
+      -<[========Creating ImageSampler:========]>-
+
+        MaxSamplerAnisotropy is: 16
+
+      -<[========Created ImageSampler!========]>-
+
+      -<[========Creating VertexBuffer:========]>-
+
+        |}========Creating Buffer 'StagingBuffer'========{|
+
+          Size: '1056'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'StagingBuffer'========{|
+
+        VertexBufferMemory mapped!
+
+        VertexBufferMemory unmapped!
+
+        |}========Creating Buffer 'VertexBuffer'========{|
+
+          Size: '1056'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'VertexBuffer'========{|
+
+        -<[========Copying Buffer to '12767619181688389676'========]>-
+
+        -<[========Copied Buffer to '12767619181688389676'========]>-
+
+      -<[========Created VertexBuffer!========]>-
+
+      -<[========Creating IndexBuffer:========]>-
+
+        |}========Creating Buffer 'StagingBuffer'========{|
+
+          Size: '144'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'StagingBuffer'========{|
+
+        IndexBufferMemory mapped!
+
+        IndexBufferMemory unmapped!
+
+        |}========Creating Buffer 'IndexBuffer'========{|
+
+          Size: '144'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'IndexBuffer'========{|
+
+        -<[========Copying Buffer to '11680734345445769264'========]>-
+
+        -<[========Copied Buffer to '11680734345445769264'========]>-
+
+      -<[========Created IndexBuffer!========]>-
+
+      -<[========Creating UniformBuffer:========]>-
+
+        |}========Creating Buffer 'UniformBuffer'========{|
+
+          Size: '80'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'UniformBuffer'========{|
+
+        |}========Creating Buffer 'UniformBuffer'========{|
+
+          Size: '80'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'UniformBuffer'========{|
+
+        |}========Creating Buffer 'UniformBuffer'========{|
+
+          Size: '80'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'UniformBuffer'========{|
+
+        |}========Creating Buffer 'ComputeUniformBuffer'========{|
+
+          Size: '16'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'ComputeUniformBuffer'========{|
+
+        |}========Creating Buffer 'ComputeOutUniformBuffer'========{|
+
+          Size: '16'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          Allocated Memory for VertexBuffer!
+
+        |}========Created Buffer 'ComputeOutUniformBuffer'========{|
+
+      -<[========Created UniformBuffer!========]>-
+
+      -<[========Creating DescriptorPool:========]>-
+
+      -<[========Created DescriptorPool!========]>-
+
+      -<[========Creating DescriptorSet:========]>-
+
+      -<[========Created DescriptorSet!========]>-
+
+      -<[========Creating CommandBuffer:========]>-
+
+        CommandBuffer count is: 3
+
+      -<[========Created CommandBuffer!========]>-
+
+      -<[========Creating SynchronizationObjects:========]>-
+
+      -<[========Created SynchronizationObjects!========]>-
+
+-<[========Engine initialization End!========]>-
+
+  -<[========Starting using of SingleCommandBuffer:========]>-
+
+    Allocating CommandBuffer!
+
+    Recording in SingleCommandBuffer!
+
+    Recorded in SingleCommandBuffer!
+
+    Submiting SingleCommandBuffer into queue!
+
+  -<[========Finished using of SingleCommandBuffer!========]>-
+
+  CUBO Y: 12.3
+
+  Max res: 2048
+
+    [#########*!*#########]
+     SDL Terminate Event!
+    [#########*!*#########]
+  
+  Average FPS: [12584]
+
+  Max FPS: [0]
+
+  Min FPS: [2283]
+
+  -<[========Cleanup Started:========]>-
+
+    -<[========Cleanup SwapChain Started:========]>-
+
+      Destroy DepthView!
+
+      Destroy DepthBuffer!
+
+      Free DepthBufferMemory!
+
+      Destroy ColorView!
+
+      Destroy ColorBuffer!
+
+      Free ColorBufferMemory!
+
+      Destroy FrameBuffers!
+
+        |> Destroy FrameBuffer number: '1'
+
+        |> Destroy FrameBuffer number: '2'
+
+        |> Destroy FrameBuffer number: '3'
+
+        |> Destroy FrameBuffer number: '4'
+
+        |> Destroy FrameBuffer number: '5'
+
+      Destroy GraphicalPipeline!
+
+      Destroy GraphicalPipelineLayout!
+
+      Destroy RenderPass!
+
+      Destroy ImageViews!
+
+        |> Destroy ImageView number: '1'
+
+        |> Destroy ImageView number: '2'
+
+        |> Destroy ImageView number: '3'
+
+        |> Destroy ImageView number: '4'
+
+        |> Destroy ImageView number: '5'
+
+      Destroy SwapChain!
+
+    -<[========Cleanup SwapChain Finished!========]>-
+
+    Destroy Descriptors!
+
+      |> Destroy UniformBuffer number: '1'
+
+      |> Free UniformBufferMemory number: '1'
+
+      |> Destroy UniformBuffer number: '2'
+
+      |> Free UniformBufferMemory number: '2'
+
+      |> Destroy UniformBuffer number: '3'
+
+      |> Free UniformBufferMemory number: '3'
+
+    Destroy ComputePipeline!
+
+    Destroy ComputePipelineLayout!
+
+    |> Destroy ComputeUniformBuffer:
+
+    |> Free ComputeUniformBufferMemory:
+
+    |> Destroy ComputeOutUniformBuffer:
+
+    |> Free ComputeOutUniformBufferMemory:
+
+    |> Destroy DescriptorPool!
+
+    |> Destroy DescriptorSetLayout!
+
+    |> Destroy ComputeDescriptorPool!
+
+    |> Destroy ComputeDescriptorSetLayout!
+
+  Destroy ImageView!
+
+  Destroy ImageSampler!
+
+  Destroy ImageBuffer!
+
+  Free ImageBufferMemory!
+
+  Destroy IndexBuffer!
+
+  Free IndexBufferMemory!
+
+  Destroy VertexBuffer!
+
+  Free VertexBufferMemory!
+
+  Rendered frame count is: '1257'
+
+    |> Destroy Semaphore AvailbleImage number: '1'
+
+    |> Destroy Semaphore FinishedImage number: '1'
+
+    |> Destroy Fence InFlight number: '1'
+
+    |> Destroy Semaphore AvailbleImage number: '2'
+
+    |> Destroy Semaphore FinishedImage number: '2'
+
+    |> Destroy Fence InFlight number: '2'
+
+    |> Destroy Semaphore AvailbleImage number: '3'
+
+    |> Destroy Semaphore FinishedImage number: '3'
+
+    |> Destroy Fence InFlight number: '3'
+
+  Destroy CommandPool!
+
+  Destroy Device!
+
+  Destroy DebugUtilsMessenger!
+
+  Destroy Surface!
+
+  Destroy Instance!
+
+  Destroy Window!
+
+-<[========Cleanup Finished!========]>-
+
+  ([========App Stopped!========])
+
+[ 0:W , 0:E ]
+
+
+2023 / 3 / 19 -- 12:38.08
+YYYY / M / DD -- HH:MM.SS

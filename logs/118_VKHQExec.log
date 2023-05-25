@@ -1,0 +1,387 @@
+App Started in:
+
+2023 / 5 / 11 -- 18:26.21
+YYYY / M / DD -- HH:MM.SS
+
+  ([========App Started:========])
+
+-<[========Engine initialization Start:========]>-
+
+    -<[========Creating Window:========]>-
+
+      SDL2 initialized!
+
+       |=Window Flags:
+       |>RESIZABLE
+       |>VULKAN
+       |============]
+
+    -<[========Created Window!========]>-
+
+    -<[========Creating Instance:========]>-
+
+      Setted AppInfo!
+
+      <========WINDOW EXTs:========>
+       |>VK_KHR_surface
+       |>VK_KHR_xlib_surface
+       |>VK_EXT_debug_utils      
+      <========^Window exts^========>
+
+      -<[========Populating DebugMessenger:========]>-
+
+        Binded DebugCallback!
+
+      -<[========Populated DebugMessenger!========]>-
+
+      Created VulkanContext!
+
+      Validation layers requested and avaible!
+
+    -<[========Created Instance!========]>-
+
+    -<[========Setuping DebugMessenger:========]>-
+
+      VALIDATION LAYER: true
+
+      Created DebugMessenger!
+
+    -<[========Setuped DebugMessenger!========]>-
+
+    -<[========Creating surface:========]>-
+
+      Created SDL2 surface!
+
+    -<[========Created Surface!========]>-
+
+    -<[========Getting Physical Device:========]>-
+
+      Finded VK forged GPU/s!
+
+      Device count is: 2
+
+      |}*****(((>-Checking Device support:-<)))*****{|
+
+        |}--------Finding QFamilies for "Check Device Support"--------{|
+
+          QueueFamilies now is: 2
+
+          Finded Queues Support for [0]
+
+           /---==---]
+           |>GRAPHICS
+           |>PRESENT
+           |>COMPUTE
+           |>TRANSFER
+           \---==---]
+
+          QueueCount now is: 1
+
+          Finded Queues Support for [1]
+
+           /---==---]
+           |>PRESENT
+           |>COMPUTE
+           |>TRANSFER
+           \---==---]
+
+          QueueCount now is: 4
+
+          Inds ready!
+
+        |}--------Getted QFamilies for "Check Device Support"--------{|
+
+        -<[========Checking Device EXTs support:========]>-
+
+          PhysicalDevice is: NOT NULL!
+
+          Temp Required EXTs array erased: true
+
+        -<[========Checked Device EXTs support!========]>-
+
+        -<========Checking SwapChain support:========>-
+
+          SurfaceFormat count is: 2
+
+          SurfaceFormat is: SUPPORTED
+
+          PresentMode count is: 4
+
+          PresentModes is: SUPPORTED
+
+        -<========Checked SwapChain support!========>-
+
+        Inds gFam has value: 1
+
+        Extensions support: true
+
+        SwapChain workable: true
+
+      |}*****(((>-Checked Device support!-<)))*****{|
+
+      FramebufferColorSampleCounts is: 15
+
+      FramebufferDepthSampleCounts is: 15
+
+        Getted PhyscialDeviceDetails!
+
+        Finded suitable GPU/s!
+
+      -<[========Getted Physical Device!========]>-
+
+      -<[========Creating & Configuring Device:========]>-
+
+        QueueFamilyCount is: 2
+
+        EXTs count is: 1
+
+        Created Device!
+
+        Device is: NOT NULL
+
+        Getted graphics family queue: 0
+
+        Getted present family queue: 1
+
+        Getted transfer family queue: 1
+
+      -<[========Created & Configured Device!========]>-
+
+      -<[========Creating SwapChain:========]>-
+
+        -<========Checking SwapChain support:========>-
+
+          SurfaceFormat count is: 2
+
+          SurfaceFormat is: SUPPORTED
+
+          PresentMode count is: 4
+
+          PresentModes is: SUPPORTED
+
+        -<========Checked SwapChain support!========>-
+
+        -<========SWAPCHAIN FORMATS:========>-
+
+          SwapChain format is: B8G8R8A8_UNORM
+
+          SwapChain colorSpace is: SRGB_NONLINEAR
+
+        -<========^SwapChain formats^========>-
+
+        -<========PRESENT MODES:========>-
+           >|IMMEDIATE
+           >|MAILBOX
+           >|FIFO
+           >|FIFO RELAXED          
+
+          Priority: 6
+
+          Count is: 4
+
+          Present mode is: MAILBOX
+
+        -<========^Present modes^========>-
+
+        -<========SWAPCHAIN EXTENT:========>-
+
+          Current extent isn't bigger than maxValue of UINT32 Type!
+
+          Extent width: 900
+
+          Extent height: 900
+
+        -<========^SwapChain extent^========>-
+
+        SwapChain frame count: 4
+
+        gFam value: 0
+
+        pFam value: 1
+
+        Image ShareMode is: CONCURRENT
+
+      -<[========Created SwapChain!========]>-
+
+      -<[========Creating SwapChain ImageViews:========]>-
+
+        Resizing SwapChain ImageViews array with size: 5
+
+          >|Created SwapChain Image view number: '1'
+
+          >|Created SwapChain Image view number: '2'
+
+          >|Created SwapChain Image view number: '3'
+
+          >|Created SwapChain Image view number: '4'
+
+          >|Created SwapChain Image view number: '5'
+
+        SwapChain ImageViews count is: 5
+
+      -<[========Created SwapChain ImageViews!========]>-
+
+      -<[========Creating RenderPass:========]>-
+
+        Attachment count is: 3
+
+      -<[========Created RenderPass!========]>-
+
+      -<[========Creating Descriptors:========]>-
+
+      -<[========Created Descriptors!========]>-
+
+      -<[========Creating GraphicalPipeline:========]>-
+
+        |}--------Reading file: 'shaders/vert.spv'--------{|
+
+          File's opening in ReadMode [BINARY]
+
+          File readed Successfully!
+
+        |}--------Readed file: 'shaders/vert.spv'--------{|
+
+        |}--------Reading file: 'shaders/frag.spv'--------{|
+
+          File's opening in ReadMode [BINARY]
+
+          File readed Successfully!
+
+        |}--------Readed file: 'shaders/frag.spv'--------{|
+
+        |}--------Creating ShaderModule:--------{|
+
+        |}--------Created ShaderModule!--------{|
+
+        |}--------Creating ShaderModule:--------{|
+
+        |}--------Created ShaderModule!--------{|
+
+        Current Resolution: 900:X|900:Y
+
+         |=Blend ColorChannels:
+         |>R=[0]
+         |>G=[0]
+         |>B=[0]
+         |>A=[0]
+         |============]
+
+        ShaderStages count is: 2
+
+      -<[========Created GraphicalPipeline!========]>-
+
+      -<[========Creating ComputePipeline:========]>-
+
+        |}--------Reading file: 'shaders/comp.spv'--------{|
+
+          File's opening in ReadMode [BINARY]
+
+          File readed Successfully!
+
+        |}--------Readed file: 'shaders/comp.spv'--------{|
+
+        |}--------Creating ShaderModule:--------{|
+
+        |}--------Created ShaderModule!--------{|
+
+      -<[========Created ComputePipeline!========]>-
+
+      -<[========Creating CommandPool:========]>-
+
+         |=CommandBuffer Flags:
+         |>RESET COMMANDBUFFER
+         |============]
+
+        QueueFamilyIndex is: 0
+
+      -<[========Created CommandPool!========]>-
+
+      -<[========Creating ColorBuffer:========]>-
+
+        -<[========Creating Image:========]>-
+
+          MipLevel count is: 1032938496
+
+        -<[========Created Image!========]>-
+
+      -<[========Created ColorBuffer!========]>-
+
+      -<[========Creating DepthBuffer:========]>-
+
+        Finding DepthFormat!
+
+        -<[========Creating Image:========]>-
+
+          MipLevel count is: 1032938496
+
+        -<[========Created Image!========]>-
+
+        -<[========Changing ImgLayout:========]>-
+
+          -<[========Starting using of SingleCommandBuffer:========]>-
+
+            Allocating CommandBuffer!
+
+            Recording in SingleCommandBuffer!
+
+            MipLevel count is: 1032938496
+
+            Recorded in SingleCommandBuffer!
+
+            Submiting SingleCommandBuffer into queue!
+
+          -<[========Finished using of SingleCommandBuffer!========]>-
+
+        -<[========Changed ImgLayout!========]>-
+
+      -<[========Created DepthBuffer!========]>-
+
+      -<[========Creating FrameBuffer:========]>-
+
+        Resizing SwapChainFramebuffers array!
+
+        Creating SwapChain FrameBuffers:
+
+          >|Created FrameBuffer number '1'
+
+          >|Created FrameBuffer number '2'
+
+          >|Created FrameBuffer number '3'
+
+          >|Created FrameBuffer number '4'
+
+          >|Created FrameBuffer number '5'
+
+        FrameBuffer count is: '5'
+
+      -<[========Created FrameBuffer!========]>-
+
+      -<[========Creating Texture:========]>-
+
+        MipMaps count is: 12
+
+        |}========Creating Buffer 'Image'========{|
+
+          ##:VALIDATION_LAYERS:##-Validation Error: [ VUID-VkBufferCreateInfo-size-00912 ] Object 0: handle = 0x5583d05d0480, type = VK_OBJECT_TYPE_DEVICE; | MessageID = 0x7c54445e | vkCreateBuffer: parameter pCreateInfo->size (= 0) is not greater than 0 The Vulkan spec states: size must be greater than 0 (https://vulkan.lunarg.com/doc/view/1.3.243.0/linux/1.3-extensions/vkspec.html#VUID-VkBufferCreateInfo-size-00912)
+
+          Size: '0'
+
+          Alignment: '16'
+
+          MemoryType: '509'
+
+          ##:VALIDATION_LAYERS:##-Validation Error: [ VUID-VkMemoryAllocateInfo-allocationSize-07898 ] Object 0: handle = 0x5583d05d0480, type = VK_OBJECT_TYPE_DEVICE; | MessageID = 0x1ddb6240 | vkAllocateMemory: allocationSize is 0. The Vulkan spec states: If the parameters define an export operation, allocationSize must be greater than 0 (https://vulkan.lunarg.com/doc/view/1.3.243.0/linux/1.3-extensions/vkspec.html#VUID-VkMemoryAllocateInfo-allocationSize-07898)
+
+          Allocated Memory for VertexBuffer!
+
+          ##:VALIDATION_LAYERS:##-Validation Error: [ UNASSIGNED-GeneralParameterError-RequiredParameter ] Object 0: handle = 0x5583d05d0480, type = VK_OBJECT_TYPE_DEVICE; | MessageID = 0x99fb7dfd | vkBindBufferMemory: required parameter memory specified as VK_NULL_HANDLE
+
+          ##:VALIDATION_LAYERS:##-Validation Error: [ VUID-vkBindBufferMemory-memoryOffset-01031 ] Object 0: VK_NULL_HANDLE, type = VK_OBJECT_TYPE_DEVICE_MEMORY; Object 1: handle = 0xb991fa0000000024, type = VK_OBJECT_TYPE_BUFFER; | MessageID = 0xf77503bd | In vkBindBufferMemory(), attempting to bind VkDeviceMemory 0x0[] to VkBuffer 0xb991fa0000000024[], memoryOffset=0x0 must be less than the memory allocation size 0x0. The Vulkan spec states: memoryOffset must be less than the size of memory (https://vulkan.lunarg.com/doc/view/1.3.243.0/linux/1.3-extensions/vkspec.html#VUID-vkBindBufferMemory-memoryOffset-01031)
+
+          ##:RUNTIME_ERROR:##-SegVault!
+
+[ 4:W , 1:E ]
+
+
+2023 / 5 / 11 -- 18:26.21
+YYYY / M / DD -- HH:MM.SS

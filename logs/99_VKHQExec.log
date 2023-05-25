@@ -1,0 +1,37 @@
+App Started in:
+
+2023 / 5 / 9 -- 13:35.35
+YYYY / M / D -- HH:MM.SS
+
+  ([========App Started:========])
+
+-<[========Engine initialization Start:========]>-
+
+    -<[========Creating Window:========]>-
+
+      SDL2 initialized!
+
+       |=Window Flags:
+       |>RESIZABLE
+       |>VULKAN
+       |============]
+
+    -<[========Created Window!========]>-
+
+    -<[========Creating Instance:========]>-
+
+      Setted AppInfo!
+
+      <========WINDOW EXTs:========>
+       |>VK_KHR_surface
+       |>VK_KHR_xlib_surface
+       |>VK_EXT_debug_utils      
+      <========^Window exts^========>
+
+      ##:RUNTIME_ERROR:##-SegVault!
+
+[ 0:W , 1:E ]
+
+
+2023 / 5 / 9 -- 13:35.35
+YYYY / M / D -- HH:MM.SS

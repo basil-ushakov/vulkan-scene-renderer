@@ -1,0 +1,19 @@
+#version 450
+
+layout(binding = 0) uniform CUBO{
+    float time;
+    uvec2 res;
+} cubo;
+
+layout(binding = 1) buffer CUBOout{
+    vec2 outres;
+} cuboout;
+
+layout(local_size_x = 8 , local_size_y = 1 , local_size_z = 1) in;
+void main(){        
+    vec2 V = vec2(0.56,4.1);
+    V *= 100.;
+    V *= 3.;
+    V /= 100.;
+    cuboout.outres = V;
+}
