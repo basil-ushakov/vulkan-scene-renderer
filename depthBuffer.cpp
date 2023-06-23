@@ -5,7 +5,7 @@ void VKHQ::crt_depthBuf(){
 
     logF({.f=NLNE,.c=1,
           .s="Finding DepthFormat!",.hs=GRYC});
-    VkFormat depthFormat=get_depthFormat();
+    VkFormat depthFormat = get_depthFormat();
 
     VKHQ_imgcrtI imgCrtI{
 		.w     = _swapChnExtent.width,
@@ -16,14 +16,20 @@ void VKHQ::crt_depthBuf(){
         .tile  = VK_IMAGE_TILING_OPTIMAL,
         .usgF  = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
         .memF  = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-        .img   = _depthBuf,
-        .dmem  = _depthBufMem
+        .img   = &_depthBuf,
+        .dmem  = &_depthBufMem
 	};crt_img(imgCrtI);
 
-    _depthView=crt_imgView(_depthBuf,1,depthFormat,VK_IMAGE_ASPECT_DEPTH_BIT);
+    VKHQ_imgViewI imgViewI{
+        .f   = depthFormat,
+        .am  = VK_IMAGE_ASPECT_DEPTH_BIT,
+        .ml  = 1,
+        .img = &_depthBuf,
+    };
+    _depthView = crt_imgView(imgViewI);
 
     VKHQ_imgLaytcrtI imgLaytCrtI{
-        .img     = _depthBuf,
+        .img     = &_depthBuf,
         .l       = 1,
         .frmt    = depthFormat,
         .oldLayt = VK_IMAGE_LAYOUT_UNDEFINED,
@@ -45,8 +51,8 @@ VkFormat VKHQ::get_supprtFormat(const std::vector<VkFormat>& formats,VkImageTili
         VkFormatProperties det;
         vkGetPhysicalDeviceFormatProperties(_physGPU,format,&det);
 
-        if(tiling==VK_IMAGE_TILING_LINEAR&&(det.linearTilingFeatures&flags)==flags)return format;
-        if(tiling==VK_IMAGE_TILING_OPTIMAL&&(det.optimalTilingFeatures&flags)==flags)return format;
+        if(tiling == VK_IMAGE_TILING_LINEAR && (det.linearTilingFeatures  & flags) == flags)return format;
+        if(tiling == VK_IMAGE_TILING_OPTIMAL&& (det.optimalTilingFeatures & flags) == flags)return format;
     }
 
     wrtSysMsg(IARG,"Failed to find SupportedFormat!");
@@ -54,5 +60,6 @@ VkFormat VKHQ::get_supprtFormat(const std::vector<VkFormat>& formats,VkImageTili
 }
 
 bool VKHQ::chk_stncl(VkFormat format){
-    return format==VK_FORMAT_D32_SFLOAT_S8_UINT||format==VK_FORMAT_D24_UNORM_S8_UINT;
+    return format == VK_FORMAT_D32_SFLOAT_S8_UINT ||
+           format == VK_FORMAT_D24_UNORM_S8_UINT;
 }

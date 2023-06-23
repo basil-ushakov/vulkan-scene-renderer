@@ -11,7 +11,7 @@ layout(binding = 0) uniform UBO{
     float sharp;
 } ubo;
 
-layout(binding = 1) uniform sampler2D texSampler;
+layout(binding = 1) uniform sampler2DArray texSampler;
 
 layout(location = 0) in vec3 fragColor;
 layout(location = 1) in vec2 fragTexCoord;
@@ -61,8 +61,16 @@ void main(){
 //     outColor.rgb += vec3(1.,0.,0.) * line(vpuv.xy,.0011,px.y);
 //     outColor.rgb += vec3(0.,1.,0.) * line(vpuv.xy,    y,px.y);
 
+    vec3 tex_color  = vec3(texture(texSampler,vec3(fragTexCoord.xy,1)).rgb);
+    vec3 tex_color2 = vec3(texture(texSampler,vec3(fragTexCoord.xy,0)).rgb);
+    vec3 tex_color3 = vec3(texture(texSampler,vec3(fragTexCoord.xy,2)).rgb);
+//     vec3 tex_color = vec3(1.,0.,.3);
+
     if(vpuv.x < .5f)
-    outColor.rgb = vec3(texture(texSampler,fragTexCoord).rgb);
+    outColor.rgb = tex_color2;
     else
-    outColor.rgb = aces_tonemap(texture(texSampler,fragTexCoord).rgb);
+    outColor.rgb = aces_tonemap(tex_color);
+
+    if(vpuv.y < .25f)
+    outColor.rgb = tex_color3;
 }

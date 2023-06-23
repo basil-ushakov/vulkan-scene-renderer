@@ -140,6 +140,7 @@ inline string wrtValToStr(f32 val){
     return str;
 }
 
+// TODO in `cstStr()` returnType -> T
 template<typename T>
 inline f32 cstVal(T val){
     return static_cast<f32>(val);

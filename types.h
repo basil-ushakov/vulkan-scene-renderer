@@ -20,7 +20,6 @@ struct SwapChnSupportDet{
 };
 
 struct Vertex{
-	
 	glm::vec3 pos;
 	glm::vec3 colr;
 	glm::vec2 texCoord;
@@ -164,16 +163,12 @@ enum{
 	VKHQ_smpl_4BIT = 0x00000004, VKHQ_smpl_64BIT = 0x00000040,
 	VKHQ_smpl_8BIT = 0x00000008,
 } VKHQ_smplBIT;
-/*
-enum{
-
-};*/
 
 const VkLogicOp VK_LOGIC_OP_FALSE = static_cast<VkLogicOp>(127);
 
 struct VKHQ_gplineI{
-	VkPipeline& 	  pline     = VKHQ_plineNull;		// Pipeline
-	VkPipelineLayout& plineLayt = VKHQ_plineLaytNull;	// Pipeline Layout
+	VkPipeline* 	  pline     = &VKHQ_plineNull;		// Pipeline
+	VkPipelineLayout* plineLayt = &VKHQ_plineLaytNull;	// Pipeline Layout
 	
 	u32 indsS[7]{0};	// Indexes of used stages
 	string s   {""};	// General Shader path
@@ -252,8 +247,8 @@ struct VKHQ_gplineI{
 };
 
 struct VKHQ_cplineI{
-	VkPipeline&       pline     = VKHQ_plineNull;		// Pipeline
-	VkPipelineLayout& plineLayt = VKHQ_plineLaytNull;	// Pipeline Layout
+	VkPipeline*       pline     = &VKHQ_plineNull;		// Pipeline
+	VkPipelineLayout* plineLayt = &VKHQ_plineLaytNull;	// Pipeline Layout
 
 	u32 lf {0};	// Layout Creation Flags
 	
@@ -266,7 +261,9 @@ struct VKHQ_cplineI{
 struct VKHQ_imgcrtI{
 	u32 w 										    {0};	// Width
 	u32 h 										    {0};	// Height
-	u32 l 										    {0};	// Mip Level
+	u32 z 										    {1};	// Depth
+	u32 l 										    {1};	// Mip Level
+	u32 as											{1};	// Array Size
 	VkSampleCountFlagBits smplC {VK_SAMPLE_COUNT_1_BIT};	// Sample Count
 
 	VkFormat      frmt {VK_FORMAT_UNDEFINED};		// Format
@@ -275,8 +272,8 @@ struct VKHQ_imgcrtI{
 	VkImageUsageFlags 	  usgF {0};	// Image Usage Flags
 	VkMemoryPropertyFlags memF {0};	// Memory Property Flags
 
-	VkImage&        img  = VKHQ_imgNull;	// Image
-	VkDeviceMemory& dmem = VKHQ_dmemNull;	// Device Memory
+	VkImage*        img  = &VKHQ_imgNull;	// Image
+	VkDeviceMemory* dmem = &VKHQ_dmemNull;	// Device Memory
 };
 
 struct VKHQ_bufcrtI{
@@ -285,49 +282,83 @@ struct VKHQ_bufcrtI{
 	VkSharingMode 	      shrM {VK_SHARING_MODE_EXCLUSIVE};	// Sharing Mode
 	VkMemoryPropertyFlags memF {0};							// Memory Property Flags
 
-	VkBuffer& 		buf  = VKHQ_bufNull;	// Buffer
-	VkDeviceMemory& dmem = VKHQ_dmemNull;	// Device Memory
+	VkBuffer* 		buf  = &VKHQ_bufNull;	// Buffer
+	VkDeviceMemory* dmem = &VKHQ_dmemNull;	// Device Memory
 
 	string name = "N0NAME";	// Buffer Name
 };
 
 struct VKHQ_buftoimgI{
-	VkBuffer& buf = VKHQ_bufNull;	// Buffer
-	VkImage&  img = VKHQ_imgNull;	// Image
+	VkBuffer* buf = &VKHQ_bufNull;	// Buffer
+	VkImage*  img = &VKHQ_imgNull;	// Image
 
 	u32 w {0};	// Width
 	u32 h {0};	// Height
+
+	u32 am {VK_IMAGE_ASPECT_COLOR_BIT};	// Aspect Mask
+	u32 ml {0};							// MipMap Level
+	u32 al {0};							// Base Array Layer
+	u32 lc {1};							// Layer Count
 };
 
 struct VKHQ_imgLaytcrtI{
-	VkImage& img = VKHQ_imgNull;	// Image
+	VkImage* img = &VKHQ_imgNull;	// Image
 
-	u32 		   		l  {0};						// Mip Level
+	u32 l  {0}; // Mip Level
+	u32 lc {1};	// Layer Count
+
 	VkFormat 	     frmt  {VK_FORMAT_UNDEFINED};	// Format
 	VkImageLayout oldLayt = VKHQ_imgLaytNull;		// Old Layout
-	VkImageLayout newLayt = VKHQ_imgLaytNull;		// New layout
+	VkImageLayout newLayt = VKHQ_imgLaytNull;		// New Layout
 };
 
 struct VKHQ_mipmapcrtI{
-	VkImage&  img = VKHQ_imgNull;			// Image
+	VkImage*  img = &VKHQ_imgNull;			// Image
 	VkFormat frmt  {VK_FORMAT_UNDEFINED};	// Format
-	int32_t 	w  {0};						// Width
-	int32_t 	h  {0};						// Height
-	u32 		l  {0};						// Mip Level
+
+	s32	w {0};	// Width
+	s32 h {0};	// Height
+
+	u32 am {VK_IMAGE_ASPECT_COLOR_BIT};	// Aspect Mask
+	u32 ml {0};							// MipMap Level
+	u32 al {0};							// Base Array Layer
+	u32 lc {1};							// Layer Count
 };
 
 struct VKHQ_cmdpoolcrtI{
 	VkCommandPoolCreateFlags f     {0};					// Command Pool Creation Flags
 	u32				 		 qFam  {0};					// Queue Family
-	VkCommandPool& 			 cmdp = VKHQ_cmdpoolNull;	// Command Pool
+	VkCommandPool*			 cmdp = &VKHQ_cmdpoolNull;	// Command Pool
+};
+
+// VkImage img,uint32_t mipLvl,VkFormat format,VkImageAspectFlags aspect
+struct VKHQ_imgViewI{
+	VkImageViewType t {VK_IMAGE_VIEW_TYPE_2D}; // ImageView Type
+	VkFormat 	    f {};					   // Format
+	// VkComponentMapping c {}; 			// Component Mapping
+
+	u32 am {VK_IMAGE_ASPECT_COLOR_BIT};	// Aspect Mask
+	u32 mb {0};							// Base MipMap Level
+	u32 ml {0};							// MipMap Level Count
+	u32 al {0};							// Base Array Layer
+	u32 lc {1};							// Layer Count
+
+	VkImage* img = &VKHQ_imgNull;
+};
+
+struct VKHQ_texSmplrI{
+	u32 ml {0}; // Mip Level
 };
 
 struct VKHQ_texcrtI{
-	string path = "";
+	std::vector<string> paths {""};
+	string path 			 = "";
 
 	u32	 w {0};
 	u32  h {0};
 	u32 ch {4};
+
+	u32 ml {1};
 
 	VKHQ_bufcrtI bufcrtI{
 		.usgF = VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
@@ -349,4 +380,6 @@ struct VKHQ_texcrtI{
         .oldLayt = VK_IMAGE_LAYOUT_UNDEFINED,
         .newLayt = VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
 	};
+
+	VKHQ_buftoimgI buftoimgAlgnI{};
 };

@@ -1,4 +1,3 @@
-// void VKHQ::crt_cmdPool(VkCommandPoolCreateFlags flag,uint32_t qFam,VkCommandPool* cmdPool){
 void VKHQ::crt_cmdPool(VKHQ_cmdpoolcrtI info) {
     logF({.f=NLNE,.c=1,.b=1,.h=CYNC,
           .s="Creating CommandPool:",.hs=YLWC,
@@ -26,7 +25,7 @@ void VKHQ::crt_cmdPool(VKHQ_cmdpoolcrtI info) {
 		  .s="QueueFamilyIndex is: ",.hs=YLWC,
 		  .v=cstVal(info.qFam),.hv=LBLC});
 
-	if(vkCreateCommandPool(_device,&poolInfo,nullptr,&info.cmdp)!=VK_SUCCESS){
+	if(vkCreateCommandPool(_device,&poolInfo,nullptr,info.cmdp)!=VK_SUCCESS){
 		wrtSysMsg(RERR,"Couldn't create CommandPool!");
 	}
 
@@ -67,24 +66,23 @@ void VKHQ::use_cmdBuf(VkCommandBuffer cmdBuf,uint32_t imgInd){
 	}
 
 	VkCommandBufferBeginInfo cmdBufBgnInfo{
-		.sType=VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
-		.flags=0,
+		.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO,
+		.flags = 0,
 	};
 
-	if(vkBeginCommandBuffer(cmdBuf,&cmdBufBgnInfo)!=VK_SUCCESS){
-		wrtSysMsg(RERR,"Failed to start CommandBuffer!");
-	}
+	if(vkBeginCommandBuffer(cmdBuf,&cmdBufBgnInfo) != VK_SUCCESS)
+	wrtSysMsg(RERR,"Failed to start CommandBuffer!");
 
 	std::array<VkClearValue,2> clrColr{};
-		clrColr[0].color={.07f,.07f,.07f,.0f};
-		clrColr[1].depthStencil={1.0f,0};
+	clrColr[0].color	    = {.07f,.07f,.07f,.0f};
+	clrColr[1].depthStencil = {1.0f,0};
 
 	VkRenderPassBeginInfo rndrPassInfo{
-		.sType=VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
-		.renderPass=_rndrPass,
-		.framebuffer=_swapChnFramBufs[imgInd],
-		.clearValueCount=std::size(clrColr),
-		.pClearValues=&clrColr[0],
+		.sType		 	 = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO,
+		.renderPass		 = _rndrPass,
+		.framebuffer	 = _swapChnFramBufs[imgInd],
+		.clearValueCount = std::size(clrColr),
+		.pClearValues 	 = &clrColr[0],
 	};
 	rndrPassInfo.renderArea.offset={0,0};
 	rndrPassInfo.renderArea.extent=_swapChnExtent;

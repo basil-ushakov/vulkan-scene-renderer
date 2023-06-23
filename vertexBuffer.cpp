@@ -1,4 +1,4 @@
-void VKHQ::crt_buf(VKHQ_bufcrtI info){
+void VKHQ::crt_buf(VKHQ_bufcrtI& info){
     string bufTxt;
     u64 txtAddr=reinterpret_cast<u64>(info.buf);
     if(info.name == "N0NAME")
@@ -16,11 +16,11 @@ void VKHQ::crt_buf(VKHQ_bufcrtI info){
         .size        = info.size,
         .usage       = info.usgF,
         .sharingMode = info.shrM
-    };if(vkCreateBuffer(_device,&bufInfo,nullptr,&info.buf)!=VK_SUCCESS)
+    };if(vkCreateBuffer(_device,&bufInfo,nullptr,info.buf)!=VK_SUCCESS)
     wrtSysMsg(RERR,"Failed to create VertexBuffer!");
 
     VkMemoryRequirements memReq;
-    vkGetBufferMemoryRequirements(_device,info.buf,&memReq);
+    vkGetBufferMemoryRequirements(_device,*info.buf,&memReq);
 
     logF({.f=NLNE|PVAL,.c=1,
           .s="Size:",.hs=WATC,
@@ -36,15 +36,14 @@ void VKHQ::crt_buf(VKHQ_bufcrtI info){
         .sType           = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
         .allocationSize  = memReq.size,
         .memoryTypeIndex = get_memType(memReq.memoryTypeBits,info.memF),
-    };if(vkAllocateMemory(_device,&allocInfo,nullptr,&info.dmem)!=VK_SUCCESS)
+    };if(vkAllocateMemory(_device,&allocInfo,nullptr,info.dmem)!=VK_SUCCESS)
       wrtSysMsg(RERR,"Failed to allocate Memory for VertexBuffer!");
 
     logF({.f=NLNE,.c=1,
           .s="Allocated Memory for VertexBuffer!",.hs=WATC});
 
-    if(vkBindBufferMemory(_device,info.buf,info.dmem,0) != VK_SUCCESS){
-        wrtSysMsg(RERR,"Failed to bind BufferMemory!");
-    }
+    if(vkBindBufferMemory(_device,*info.buf,*info.dmem,0) != VK_SUCCESS)
+    wrtSysMsg(RERR,"Failed to bind BufferMemory!");
 
     logF({.f=NLNE|MDTB,.c=1,.b=4,.h=LBLC,
           .s="Created Buffer",.hs=WATC,
@@ -124,8 +123,8 @@ void VKHQ::crt_vertBuf(){
 		.usgF = VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		.shrM = VK_SHARING_MODE_EXCLUSIVE,
 		.memF = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-		.buf  = stgBuf,
-		.dmem = stgBufMem,
+		.buf  = &stgBuf,
+		.dmem = &stgBufMem,
 		.name = "StagingBuffer"
 	};crt_buf(bufStgcrtI);
 
@@ -145,8 +144,8 @@ void VKHQ::crt_vertBuf(){
 		.usgF = VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
 		.shrM = VK_SHARING_MODE_EXCLUSIVE,
 		.memF = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-		.buf  = _objs[0].vertBuf,
-		.dmem = _objs[0].vertBufMem,
+		.buf  = &_objs[0].vertBuf,
+		.dmem = &_objs[0].vertBufMem,
 		.name = "VertexBuffer"
 	};crt_buf(bufVertcrtI);
 
@@ -172,8 +171,8 @@ void VKHQ::crt_indBuf(){
 		.usgF = VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
 		.shrM = VK_SHARING_MODE_EXCLUSIVE,
 		.memF = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
-		.buf  = stgBuf,
-		.dmem = stgBufMem,
+		.buf  = &stgBuf,
+		.dmem = &stgBufMem,
 		.name = "StagingBuffer"
 	};crt_buf(bufStgcrtI);
     
@@ -193,8 +192,8 @@ void VKHQ::crt_indBuf(){
 		.usgF = VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
 		.shrM = VK_SHARING_MODE_EXCLUSIVE,
 		.memF = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-		.buf  = _objs[0].indBuf,
-		.dmem = _objs[0].indBufMem,
+		.buf  = &_objs[0].indBuf,
+		.dmem = &_objs[0].indBufMem,
 		.name = "IndexBuffer"
 	};crt_buf(bufIndcrtI);
 

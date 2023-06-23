@@ -8,29 +8,29 @@ void VKHQ::crt_swapChn(){
     VkPresentModeKHR       prsntMode = get_SwapChnPrsntMode(det.prsntModes);
     VkExtent2D                 extnt = get_SwapChnExtent(det.capblites);
 
-    uint32_t frameCount = det.capblites.minImageCount+1;
+    uint32_t frameCount = det.capblites.minImageCount + 1;
 	logF({.f=NLNE|PVAL,.c=1,
 		  .s="SwapChain frame count: ",.hs=LBLC,
           .v=cstVal(frameCount)});
 
-    if(det.capblites.maxImageCount>0&&frameCount>det.capblites.maxImageCount){
-        frameCount=det.capblites.maxImageCount;
-    }
+    if(det.capblites.maxImageCount > 0 &&
+       frameCount > det.capblites.maxImageCount)
+    frameCount = det.capblites.maxImageCount;
 
     VkSwapchainCreateInfoKHR swapChainInfo{
-        .sType=VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
-        .surface=_surface,
-        .minImageCount=frameCount,
-        .imageFormat=surfaceFormat.format,
-        .imageColorSpace=surfaceFormat.colorSpace,
-        .imageExtent=extnt,
-        .imageArrayLayers=1,
-        .imageUsage=VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
+        .sType            = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
+        .surface          = _surface,
+        .minImageCount    = frameCount,
+        .imageFormat      = surfaceFormat.format,
+        .imageColorSpace  = surfaceFormat.colorSpace,
+        .imageExtent      = extnt,
+        .imageArrayLayers = 1,
+        .imageUsage       = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
     };
 
-    uint32_t qFamInds[]={
+    uint32_t qFamInds[] = {
         _qInds.gFam.value(),
-        _qInds.pFam.value()
+        _qInds.pFam.value(),
     };
 
 	logF({.f=NLNE|PVAL,.c=1,
@@ -41,7 +41,7 @@ void VKHQ::crt_swapChn(){
           .v=cstVal(_qInds.pFam.value())});
 
     string shrModeName;
-    if(_qInds.gFam!=_qInds.pFam){
+    if(_qInds.gFam != _qInds.pFam){
         swapChainInfo.imageSharingMode      = VK_SHARING_MODE_CONCURRENT;
         swapChainInfo.queueFamilyIndexCount = 2;
         swapChainInfo.pQueueFamilyIndices   = qFamInds;
@@ -60,9 +60,9 @@ void VKHQ::crt_swapChn(){
     swapChainInfo.clipped        = VK_TRUE;
     swapChainInfo.oldSwapchain   = VK_NULL_HANDLE;
 
-    if(vkCreateSwapchainKHR(_device,&swapChainInfo,nullptr,&_swapChn)!=VK_SUCCESS){
-        wrtSysMsg(RERR,"Failed to find suitable GPU!");
-    }
+    if(vkCreateSwapchainKHR(_device,&swapChainInfo,nullptr,&_swapChn) != VK_SUCCESS)
+    wrtSysMsg(RERR,"Failed to find suitable GPU!");
+
     vkGetSwapchainImagesKHR(_device,_swapChn,&frameCount,nullptr);
     _swapChnImgs.resize(frameCount);
     vkGetSwapchainImagesKHR(_device,_swapChn,&frameCount,_swapChnImgs.data());
@@ -91,9 +91,9 @@ SwapChnSupportDet VKHQ::chk_swapChnSupport(VkPhysicalDevice device){
 		  .s="SurfaceFormat count is: ",.hs=WATC,
           .v=cstVal(formatCount),.hv=CYNC});
 
-    if(formatCount!=0){
+    if(formatCount != 0){
         det.formats.resize(formatCount);
-        if(vkGetPhysicalDeviceSurfaceFormatsKHR(device,_surface,&formatCount,det.formats.data())==VK_SUCCESS){
+        if(vkGetPhysicalDeviceSurfaceFormatsKHR(device,_surface,&formatCount,det.formats.data()) == VK_SUCCESS){
             supportName = "SUPPORTED";
         }
     }
@@ -110,7 +110,7 @@ SwapChnSupportDet VKHQ::chk_swapChnSupport(VkPhysicalDevice device){
     supportName = "SUPPORTED";
     if(prsntCount!=0){
         det.prsntModes.resize(prsntCount);
-        if(vkGetPhysicalDeviceSurfacePresentModesKHR(device,_surface,&prsntCount,det.prsntModes.data())!=VK_SUCCESS){
+        if(vkGetPhysicalDeviceSurfacePresentModesKHR(device,_surface,&prsntCount,det.prsntModes.data()) != VK_SUCCESS){
             supportName = "NOT SUPPORTED";
         }
     }
@@ -127,9 +127,10 @@ VkSurfaceFormatKHR VKHQ::get_SwapChnFormat(const std::vector<VkSurfaceFormatKHR>
 	logF({.f=NLNE,.c=1,.b=2,.h=YLWC,
 		  .s="SWAPCHAIN FORMATS:",.hs=BLUC,
           .f2=DTAB|NLNE});
-    for(const auto& availableFormat:availableFormats){
-        if(availableFormat.format==VK_FORMAT_B8G8R8A8_UNORM&&
-            availableFormat.colorSpace==VK_COLOR_SPACE_SRGB_NONLINEAR_KHR){
+
+    for(const auto& availableFormat : availableFormats){
+        if(availableFormat.format     == VK_FORMAT_B8G8R8A8_UNORM &&
+           availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR){
             logF({.f=NLNE,.c=1,
                   .s="SwapChain format is: B8G8R8A8_UNORM",.hs=BLUC});
             logF({.f=NLNE,.c=1,
@@ -140,14 +141,15 @@ VkSurfaceFormatKHR VKHQ::get_SwapChnFormat(const std::vector<VkSurfaceFormatKHR>
             return availableFormat;
         }
     }
+
 	logF({.f=NLNE|MDTB,.c=1,.b=2,.h=YLWC,
 		  .s="^SwapChain formats^",.hs=BLUC});
     return availableFormats[0];
 }
 
 inline bool chk_prior(u64 priorNew,u64& crnt){
-    if(crnt<priorNew){
-        crnt=priorNew;
+    if(crnt < priorNew){
+        crnt = priorNew;
         return true;
     }
     return false;
@@ -164,46 +166,46 @@ VkPresentModeKHR VKHQ::get_SwapChnPrsntMode(const std::vector<VkPresentModeKHR>&
     u64              prior     {0};
 
     for(u32 i=0;i<availablePrsntModes.size();i++){
-        if(availablePrsntModes[i]==VK_PRESENT_MODE_MAILBOX_KHR){
+        if(availablePrsntModes[i] == VK_PRESENT_MODE_MAILBOX_KHR){
             prsntModeNames.push_back("MAILBOX");
             if(chk_prior(6,prior)){
-                prsntMode=VK_PRESENT_MODE_MAILBOX_KHR;
-                prsntModeName="MAILBOX";
+                prsntMode     = VK_PRESENT_MODE_MAILBOX_KHR;
+                prsntModeName = "MAILBOX";
             }
         }
-        else if(availablePrsntModes[i]==VK_PRESENT_MODE_FIFO_RELAXED_KHR){
+        else if(availablePrsntModes[i] == VK_PRESENT_MODE_FIFO_RELAXED_KHR){
             prsntModeNames.push_back("FIFO RELAXED");
             if(chk_prior(5,prior)){
-                prsntMode=VK_PRESENT_MODE_FIFO_RELAXED_KHR;
-                prsntModeName="FIFO RELAXED";
+                prsntMode     = VK_PRESENT_MODE_FIFO_RELAXED_KHR;
+                prsntModeName = "FIFO RELAXED";
             }
         }
-        else if(availablePrsntModes[i]==VK_PRESENT_MODE_FIFO_KHR){
+        else if(availablePrsntModes[i] == VK_PRESENT_MODE_FIFO_KHR){
             prsntModeNames.push_back("FIFO");
             if(chk_prior(4,prior)){
-                prsntMode=VK_PRESENT_MODE_FIFO_KHR;
-                prsntModeName="FIFO";
+                prsntMode     = VK_PRESENT_MODE_FIFO_KHR;
+                prsntModeName = "FIFO";
             }
         }
-        else if(availablePrsntModes[i]==VK_PRESENT_MODE_IMMEDIATE_KHR){
+        else if(availablePrsntModes[i] == VK_PRESENT_MODE_IMMEDIATE_KHR){
             prsntModeNames.push_back("IMMEDIATE");
             if(chk_prior(3,prior)){
-                prsntMode=VK_PRESENT_MODE_IMMEDIATE_KHR;
-                prsntModeName="IMMEDIATE";
+                prsntMode     = VK_PRESENT_MODE_IMMEDIATE_KHR;
+                prsntModeName = "IMMEDIATE";
             }
         }
-        else if(availablePrsntModes[i]==VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR){
+        else if(availablePrsntModes[i] == VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR){
             prsntModeNames.push_back("SHARED DEMAND REFRESH");
             if(chk_prior(2,prior)){
-                prsntMode=VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR;
-                prsntModeName="SHARED DEMAND REFRESH";
+                prsntMode     = VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR;
+                prsntModeName = "SHARED DEMAND REFRESH";
             }
         }
-        else if(availablePrsntModes[i]==VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR){
+        else if(availablePrsntModes[i] == VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR){
             prsntModeNames.push_back("SHARED CONTINUOUS REFRESH");
             if(chk_prior(1,prior)){
-                prsntMode=VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR;
-                prsntModeName="SHARED CONTINUOUS REFRESH";
+                prsntMode     = VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR;
+                prsntModeName = "SHARED CONTINUOUS REFRESH";
             }
         }
         else{
@@ -282,7 +284,7 @@ void VKHQ::crt_imgViews(){
           .s="Creating SwapChain ImageViews:",.hs=CYNC,
           .f2=NLNE|DTAB});
 
-    s swpChnSize=_swapChnImgs.size();
+    s swpChnSize = _swapChnImgs.size();
     _swapChnImgViews.resize(swpChnSize);
     logF({.f=NLNE|PVAL,.c=1,
           .s="Resizing SwapChain ImageViews array with size:",.hs=CYNC,
@@ -290,9 +292,18 @@ void VKHQ::crt_imgViews(){
           .f2=NLNE|DTAB});
 
     size_t i;
-    for(i=0;i<swpChnSize;i++){
-        _swapChnImgViews[i]=crt_imgView(_swapChnImgs[i],1,
-                                        _swapChnFormat,VK_IMAGE_ASPECT_COLOR_BIT);
+    for(i = 0;i < swpChnSize;i++){
+        VKHQ_imgViewI imgViewI{
+            .f   = _swapChnFormat,
+            .am  = VK_IMAGE_ASPECT_COLOR_BIT,
+            .ml  = 1,
+            .img = &_swapChnImgs[i],
+        };
+        _swapChnImgViews[i] = crt_imgView(imgViewI);
+
+        // _swapChnImgViews[i] = crt_imgView(_swapChnImgs[i],1,
+        //                                   _swapChnFormat,VK_IMAGE_ASPECT_COLOR_BIT);
+
         logF({.f=NLNE|PVAL,.c=1,
               .s=">|Created SwapChain Image view number:",.hs=CYNC,
               .v=cstVal(i+1),.bv=3,.hv=YLWC}); 
@@ -307,15 +318,14 @@ void VKHQ::crt_imgViews(){
 }
 
 void VKHQ::rcrt_swapchn(){
-    // if(timeout>30)wrtSysMsg(RERR,"A lot of Swapchain Recreating!");        
-
     logF({.f=NLNE,.c=1,.b=1,.h=GRYC,
           .s="ReCreating SwapChain:",.hs=GRYC,
           .f2=NLNE|DTAB});
 
     int width,height=0;
     SDL_Vulkan_GetDrawableSize(_window,&width,&height);
-    while(width==0||height==0){
+    while(width  == 0 ||
+          height == 0){
         SDL_Vulkan_GetDrawableSize(_window,&width,&height);
         SDL_WaitEvent(NULL);
     }
@@ -335,13 +345,13 @@ void VKHQ::rcrt_swapchn(){
     crt_rndrPass();
 	
     VKHQ_gplineI gplnInfo{
-		.pline=_graphxPline,
-		.plineLayt=_graphxPlineLayt,
-		.fs="shaders/frag.spv",
-		.vs="shaders/vert.spv",
-		.vw=(float)_swapChnExtent.width,
-		.vh=(float)_swapChnExtent.height,
-		.smpls=VK_SAMPLE_COUNT_8_BIT,
+		.pline     = &_graphxPline,
+		.plineLayt = &_graphxPlineLayt,
+		.fs        = "shaders/frag.spv",
+		.vs        = "shaders/vert.spv",
+		.vw        = (float)_swapChnExtent.width,
+		.vh        = (float)_swapChnExtent.height,
+		.smpls     = VK_SAMPLE_COUNT_8_BIT,
 	};crt_graphxPline(gplnInfo);
     
     crt_colrBuf();

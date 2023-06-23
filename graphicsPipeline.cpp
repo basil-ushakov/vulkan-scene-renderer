@@ -101,7 +101,7 @@ void VKHQ::crt_rndrPass(){
           .s="Created RenderPass!",.hs=REDC});
 }
 
-void VKHQ::crt_graphxPline(VKHQ_gplineI Info){
+void VKHQ::crt_graphxPline(VKHQ_gplineI info){
     logF({.f=NLNE,.c=1,.b=1,.h=LIMC,
           .s="Creating GraphicalPipeline:",.hs=LIMC,
           .f2=NLNE|DTAB});
@@ -121,12 +121,11 @@ void VKHQ::crt_graphxPline(VKHQ_gplineI Info){
 		.pPushConstantRanges 	= &pushCnst,
 	};
 
-	if(vkCreatePipelineLayout(_device,&plineLaytInfo,nullptr,&Info.plineLayt)!=VK_SUCCESS){
-		wrtSysMsg(RERR,"Failed to create PipelineLayout!");
-	}
+	if(vkCreatePipelineLayout(_device,&plineLaytInfo,nullptr,info.plineLayt)!=VK_SUCCESS)
+	wrtSysMsg(RERR,"Failed to create PipelineLayout!");
 
-	std::vector<char> vShaderBin = read_f(Info.vs,std::ios::binary);
-	std::vector<char> fShaderBin = read_f(Info.fs,std::ios::binary);
+	std::vector<char> vShaderBin = read_f(info.vs,std::ios::binary);
+	std::vector<char> fShaderBin = read_f(info.fs,std::ios::binary);
 
 	VkShaderModule vShaderModl = crt_shaderModl(vShaderBin);
 	VkShaderModule fShaderModl = crt_shaderModl(fShaderBin);
@@ -151,9 +150,9 @@ void VKHQ::crt_graphxPline(VKHQ_gplineI Info){
 	
 	VkPipelineInputAssemblyStateCreateInfo inpAssmblyState{
 		.sType 					= VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
-		.flags 					= Info.tplgF,
-		.topology 				= Info.tplg,
-		.primitiveRestartEnable = Info.prmRst,
+		.flags 					= info.tplgF,
+		.topology 				= info.tplg,
+		.primitiveRestartEnable = info.prmRst,
 	};
 	
 	auto bindDscr = Vertex::get_bindDscr();
@@ -168,28 +167,28 @@ void VKHQ::crt_graphxPline(VKHQ_gplineI Info){
 	};
 	
 	VkViewport viewport{
-		.x 		  = Info.vx,
-		.y 		  = Info.vy,
-		.width    = Info.vw,
-		.height   = Info.vh,
+		.x 		  = info.vx,
+		.y 		  = info.vy,
+		.width    = info.vw,
+		.height   = info.vh,
 		.minDepth = 0.0f,
 		.maxDepth = 1.0f,
 	};
 	
 	VkOffset2D scissorOffset{
-		(int32_t)Info.sx,(int32_t)Info.sy
+		(int32_t)info.sx,(int32_t)info.sy
 	};
 	
 	VkRect2D scissor{
 		.offset = scissorOffset,
-		.extent = {(uint32_t)Info.vw-(uint32_t)Info.sx,
-				   (uint32_t)Info.vh-(uint32_t)Info.sy},
+		.extent = {(uint32_t)info.vw-(uint32_t)info.sx,
+				   (uint32_t)info.vh-(uint32_t)info.sy},
 	};
 
 	logF({.f=NLNE,.c=1,
 		  .s="Current Resolution:",.hs=LIMC,
-		  .s2=(cstStr((uint32_t)Info.vw-(int32_t)Info.sx)+":X|"+
-			   cstStr((uint32_t)Info.vh-(int32_t)Info.sy)+":Y"),.bs2=1,.hs2=YLWC});
+		  .s2=(cstStr((uint32_t)info.vw-(int32_t)info.sx)+":X|"+
+			   cstStr((uint32_t)info.vh-(int32_t)info.sy)+":Y"),.bs2=1,.hs2=YLWC});
 
 	VkPipelineViewportStateCreateInfo viewportState{
 		.sType 		   = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO,
@@ -201,71 +200,71 @@ void VKHQ::crt_graphxPline(VKHQ_gplineI Info){
 
 	VkPipelineRasterizationStateCreateInfo rasterState{
 		.sType 					 = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
-		.flags 					 = Info.rastF,
-		.depthClampEnable		 = Info.dpthClmp,
-		.rasterizerDiscardEnable = Info.rastDscrd,
-		.polygonMode 			 = Info.plygnM,
-		.cullMode 				 = Info.cullM,
-		.frontFace 				 = Info.frntFs,
-		.depthBiasEnable 		 = Info.dpthBias,
-		.depthBiasConstantFactor = Info.dpthBiasCnst,
-		.depthBiasClamp 		 = Info.dpthBiasClmp,
-		.depthBiasSlopeFactor 	 = Info.dpthBiasSlpe,
-		.lineWidth 				 = Info.lnw,
+		.flags 					 = info.rastF,
+		.depthClampEnable		 = info.dpthClmp,
+		.rasterizerDiscardEnable = info.rastDscrd,
+		.polygonMode 			 = info.plygnM,
+		.cullMode 				 = info.cullM,
+		.frontFace 				 = info.frntFs,
+		.depthBiasEnable 		 = info.dpthBias,
+		.depthBiasConstantFactor = info.dpthBiasCnst,
+		.depthBiasClamp 		 = info.dpthBiasClmp,
+		.depthBiasSlopeFactor 	 = info.dpthBiasSlpe,
+		.lineWidth 				 = info.lnw,
 	};
 
 	VkPipelineMultisampleStateCreateInfo mltSampleState{
 		.sType 				   = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
-		.rasterizationSamples  = (VkSampleCountFlagBits)(Info.smpls),
-		.sampleShadingEnable   = Info.smplShd,
-		.minSampleShading 	   = Info.smplShdMin,
-		.pSampleMask 		   = Info.smplMsk,
-		.alphaToCoverageEnable = Info.alphaToCov,
-		.alphaToOneEnable 	   = Info.alphaToOne,
+		.rasterizationSamples  = (VkSampleCountFlagBits)(info.smpls),
+		.sampleShadingEnable   = info.smplShd,
+		.minSampleShading 	   = info.smplShdMin,
+		.pSampleMask 		   = info.smplMsk,
+		.alphaToCoverageEnable = info.alphaToCov,
+		.alphaToOneEnable 	   = info.alphaToOne,
 	};
 
 	VkPipelineDepthStencilStateCreateInfo depthStnclState{
 		.sType 				   = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
-		.flags 				   = Info.dpthStnclF,
-		.depthTestEnable 	   = Info.dpthTest,
-		.depthWriteEnable 	   = Info.dpthWrt,
-		.depthCompareOp 	   = Info.dpthOp,
-		.depthBoundsTestEnable = Info.dpthBndsTest,
-		.stencilTestEnable 	   = Info.stnclTest,
-		.front				   = Info.stnclFront,
-		.back				   = Info.stnclBack,
-		.minDepthBounds 	   = Info.dpthBndsMin,
-		.maxDepthBounds 	   = Info.dpthBndsMax,
+		.flags 				   = info.dpthStnclF,
+		.depthTestEnable 	   = info.dpthTest,
+		.depthWriteEnable 	   = info.dpthWrt,
+		.depthCompareOp 	   = info.dpthOp,
+		.depthBoundsTestEnable = info.dpthBndsTest,
+		.stencilTestEnable 	   = info.stnclTest,
+		.front				   = info.stnclFront,
+		.back				   = info.stnclBack,
+		.minDepthBounds 	   = info.dpthBndsMin,
+		.maxDepthBounds 	   = info.dpthBndsMax,
 	};
 
 	VkPipelineColorBlendAttachmentState colrBlendAttch{
-		.blendEnable 		 = Info.blnd,
-		.srcColorBlendFactor = Info.blndClrSrc,
-		.dstColorBlendFactor = Info.blndClrDst,
-		.colorBlendOp 		 = Info.blndClrOp,
-		.srcAlphaBlendFactor = Info.blndAlphSrc,
-		.dstAlphaBlendFactor = Info.blndAlphDst,
-		.alphaBlendOp 		 = Info.blndAlphOp,
-		.colorWriteMask		 = Info.blndMsk
+		.blendEnable 		 = info.blnd,
+		.srcColorBlendFactor = info.blndClrSrc,
+		.dstColorBlendFactor = info.blndClrDst,
+		.colorBlendOp 		 = info.blndClrOp,
+		.srcAlphaBlendFactor = info.blndAlphSrc,
+		.dstAlphaBlendFactor = info.blndAlphDst,
+		.alphaBlendOp 		 = info.blndAlphOp,
+		.colorWriteMask		 = info.blndMsk
 	};
 
-	float* blendConstants = Info.blndCnsts;
+	float* blendConstants = info.blndCnsts;
 	VkPipelineColorBlendStateCreateInfo colrBlendState{
 		.sType 			 = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
-		.flags 			 = Info.blndClrF,
-		.logicOpEnable 	 = Info.lOp==127?VK_FALSE:VK_TRUE,
-		.logicOp 		 = Info.lOp,
+		.flags 			 = info.blndClrF,
+		.logicOpEnable 	 = info.lOp==127?VK_FALSE:VK_TRUE,
+		.logicOp 		 = info.lOp,
 		.attachmentCount = 1,
 		.pAttachments 	 = &colrBlendAttch,
 		.blendConstants  = {
-							Info.blndCnsts[0],
-							Info.blndCnsts[1],
-							Info.blndCnsts[2],
-							Info.blndCnsts[3],
+							info.blndCnsts[0],
+							info.blndCnsts[1],
+							info.blndCnsts[2],
+							info.blndCnsts[3],
 						   }
 	};
 
-	float* blndColr = Info.blndClr;
+	float* blndColr = info.blndClr;
 
 #ifndef NDEBUG
 	EnumList colrChnls;
@@ -308,9 +307,8 @@ void VKHQ::crt_graphxPline(VKHQ_gplineI Info){
 		.basePipelineIndex	 = 0,
 	};
 	
-	if(vkCreateGraphicsPipelines(_device,VK_NULL_HANDLE,1,&plineInfo,nullptr,&Info.pline)!=VK_SUCCESS){
-		wrtSysMsg(RERR,"Failed to create GraphicalPipeline!");
-	}
+	if(vkCreateGraphicsPipelines(_device,VK_NULL_HANDLE,1,&plineInfo,nullptr,info.pline)!=VK_SUCCESS)
+	wrtSysMsg(RERR,"Failed to create GraphicalPipeline!");
 
 	vkDestroyShaderModule(_device,fShaderModl,nullptr);
 	vkDestroyShaderModule(_device,vShaderModl,nullptr);
@@ -333,25 +331,24 @@ void VKHQ::crt_framBuf(){
           .f2=NLNE|DTAB});
 
 	for(size_t i=0;i<swapChnImgsSize;i++){
-		std::array<VkImageView,3> attchs={
+		std::array<VkImageView,3> attchs = {
 			_colrView,
 			_depthView,
 			_swapChnImgViews[i],
 		};
 
 		VkFramebufferCreateInfo framBufInfo{
-			.sType=VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
-			.renderPass=_rndrPass,
-			.attachmentCount=attchs.size(),
-			.pAttachments=attchs.data(),
-			.width=_swapChnExtent.width,
-			.height=_swapChnExtent.height,
-			.layers=1,
+			.sType			 = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
+			.renderPass		 = _rndrPass,
+			.attachmentCount = attchs.size(),
+			.pAttachments	 = attchs.data(),
+			.width			 = _swapChnExtent.width,
+			.height			 = _swapChnExtent.height,
+			.layers			 = 1,
 		};
 
-		if(vkCreateFramebuffer(_device,&framBufInfo,nullptr,&_swapChnFramBufs[i])!=VK_SUCCESS){
-			wrtSysMsg(RERR,"Failed to create FrameBuffer!");
-		}
+		if(vkCreateFramebuffer(_device,&framBufInfo,nullptr,&_swapChnFramBufs[i]) != VK_SUCCESS)
+		wrtSysMsg(RERR,"Failed to create FrameBuffer!");
 
 		logF({.f=NLNE|PVAL,.c=1,
 			  .s=">|Created FrameBuffer number",.hs=YLWC,

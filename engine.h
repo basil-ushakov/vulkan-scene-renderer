@@ -3,8 +3,10 @@
 class VKHQ{
 
 public:
-    std::string MODEL_PATH   = "models/cube.obj";
-    std::string TEXTURE_PATH = "textures/viking_room.png";
+    std::string MODEL_PATH    = "models/cube.obj";
+    std::string TEXTURE_PATH  = "textures/viking_room.png";
+    std::string TEXTURE_PATH2 = "textures/grass_seamless.png";
+    std::string TEXTURE_PATH3 = "textures/stone.png";
 
     u32 timeout{0};
 
@@ -403,8 +405,7 @@ private:
     * 
     */
     
-                VkImageView crt_imgView(VkImage img,uint32_t mipLvl,
-                                        VkFormat format,VkImageAspectFlags aspect);
+                VkImageView crt_imgView(VKHQ_imgViewI info);
                 /*
                 * Create ImageView
                 * ------------------------------------------------------
@@ -432,7 +433,7 @@ private:
     * 
     */
     
-    void crt_graphxPline(VKHQ_gplineI Info);
+    void crt_graphxPline(VKHQ_gplineI info);
     /*
     * Create GraphicalPipeline
     * ------------------------------------------------------
@@ -556,7 +557,7 @@ private:
             * 
             */
 
-                    void crt_buf(VKHQ_bufcrtI info);
+                    void crt_buf(VKHQ_bufcrtI& info);
                     /*
                     * Create Buffer
                     * ------------------------------------------------------
@@ -608,7 +609,7 @@ private:
                 * 
                 */
 
-    void crt_tex(VKHQ_texcrtI info);
+    void crt_tex(VKHQ_texcrtI& info);
     // void crt_tex();
     /*
     * Create Texture
@@ -618,7 +619,7 @@ private:
     *
     */
 
-                void crt_img(VKHQ_imgcrtI info);
+                void crt_img(VKHQ_imgcrtI& info);
                 /*
                 * Create Image
                 * ------------------------------------------------------
@@ -651,7 +652,7 @@ private:
                 *  
                 */
                     
-                void crt_texSmplr();
+                void crt_texSmplr(VKHQ_texSmplrI info);
                 /*
                 * Create TextureSampler
                 * ------------------------------------------------------
@@ -735,7 +736,7 @@ private:
     * 
     */    
     
-    void crt_compPline(VKHQ_cplineI Info);
+    void crt_compPline(VKHQ_cplineI info);
 
 //======================
 //MainLoop PrivateMethods:
